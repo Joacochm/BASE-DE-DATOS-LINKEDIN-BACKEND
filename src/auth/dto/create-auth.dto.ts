@@ -15,6 +15,14 @@ export class CreateAuthDto {
   @IsNotEmpty({ message: 'El pais del usuario es obligatorio' })
   paisId: string;
 
+  @IsUUID()
+  @IsNotEmpty({ message: 'El municipio del usuario es obligatorio' })
+  municipioId: string;
+
+  @IsUUID()
+  @IsNotEmpty({ message: 'El departamento del usuario es obligatorio' })
+  departamentoId: string;
+
   @IsEmail({}, { message: 'El correo electrónico no es válido' })
   @Length(5, 255, { message: 'El correo debe tener entre 5 y 255 caracteres' })
   email: string;

@@ -19,6 +19,9 @@ export class UserExperiencia {
   puesto: string;
 
   @Column({ type: 'varchar', length: 255 })
+  cargo: string;
+
+  @Column({ type: 'varchar', length: 255 })
   empresa: string;
 
   @Column({ type: 'date' })
@@ -29,6 +32,12 @@ export class UserExperiencia {
 
   @Column({ type: 'varchar', nullable: true })
   descripcion?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  ubicacion?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  aptitudes?: string;
 
   @CreateDateColumn()
   createdAt: Date;

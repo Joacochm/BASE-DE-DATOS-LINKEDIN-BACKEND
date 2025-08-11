@@ -17,6 +17,11 @@ export class CreateUserExperienciaDto {
   @MaxLength(255, { message: 'El puesto no debe exceder 255 caracteres' })
   puesto: string;
 
+  @IsString({ message: 'El cargo debe ser una cadena de texto' })
+  @IsNotEmpty({ message: 'El cargo es obligatorio' })
+  @MaxLength(255, { message: 'El cargo no debe exceder 255 caracteres' })
+  cargo: string;
+
   @IsString({ message: 'La empresa debe ser una cadena de texto' })
   @IsNotEmpty({ message: 'La empresa es obligatoria' })
   @MaxLength(255, { message: 'La empresa no debe exceder 255 caracteres' })
@@ -38,6 +43,14 @@ export class CreateUserExperienciaDto {
   @IsOptional()
   @IsString({ message: 'La descripción debe ser una cadena de texto' })
   descripcion?: string;
+
+  @IsOptional()
+  @IsString({ message: 'La ubicacion debe ser una cadena de texto' })
+  ubicacion?: string;
+
+  @IsOptional()
+  @IsString({ message: 'Las aptitudes debe ser una cadena de texto' })
+  aptitudes?: string;
 }
 
 export class UpdateUserExperienciaDto {
@@ -45,6 +58,11 @@ export class UpdateUserExperienciaDto {
   @IsString({ message: 'El puesto debe ser una cadena de texto' })
   @MaxLength(255, { message: 'El puesto no debe exceder 255 caracteres' })
   puesto?: string;
+
+  @IsOptional()
+  @IsString({ message: 'El cargo debe ser una cadena de texto' })
+  @MaxLength(255, { message: 'El cargo no debe exceder 255 caracteres' })
+  cargo?: string;
 
   @IsOptional()
   @IsString({ message: 'La empresa debe ser una cadena de texto' })
@@ -68,4 +86,12 @@ export class UpdateUserExperienciaDto {
   @IsOptional()
   @IsString({ message: 'La descripción debe ser una cadena de texto' })
   descripcion?: string;
+
+  @IsOptional()
+  @IsString({ message: 'La ubicacion debe ser una cadena de texto' })
+  ubicacion?: string;
+
+  @IsOptional()
+  @IsString({ message: 'Las aptitudes debe ser una cadena de texto' })
+  aptitudes?: string;
 }

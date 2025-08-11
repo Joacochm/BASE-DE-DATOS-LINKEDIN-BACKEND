@@ -30,6 +30,15 @@ export class UserEducacion {
   @Column({ type: 'varchar', nullable: true })
   descripcion?: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  aptitudes?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  nota?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  disciplina_academia?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

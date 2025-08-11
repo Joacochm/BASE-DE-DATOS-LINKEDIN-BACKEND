@@ -13,6 +13,11 @@ import { SeedModule } from './seed/seed.module';
 import { MailModule } from './mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { DepartamentoPaisModule } from './departamento_pais/departamento_pais.module';
+import { MunicipioDepartamentoModule } from './municipio_departamento/municipio_departamento.module';
+import { ImagenesPortadasModule } from './imagenes_portadas/imagenes_portadas.module';
+import { PostsUsersModule } from './posts_users/posts_users.module';
+import { PostsMediaModule } from './posts_media/posts_media.module';
 
 @Module({
   imports: [
@@ -40,6 +45,11 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     PaisModule,
     SeedModule,
     MailModule,
+    DepartamentoPaisModule,
+    MunicipioDepartamentoModule,
+    ImagenesPortadasModule,
+    PostsUsersModule,
+    PostsMediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

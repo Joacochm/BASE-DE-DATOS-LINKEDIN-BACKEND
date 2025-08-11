@@ -16,6 +16,8 @@ import { instanceToPlain } from 'class-transformer';
 import { LoginDto } from './dto/login-auth.dto';
 import { Pai } from 'src/pais/entities/pai.entity';
 import { MailService } from 'src/mail/mail.service';
+import { DepartamentoPai } from 'src/departamento_pais/entities/departamento_pai.entity';
+import { MunicipioDepartamento } from 'src/municipio_departamento/entities/municipio_departamento.entity';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +25,11 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Pai)
-    private readonly PaiRepository: Repository<Pai>,
+    private readonly paiRepository: Repository<Pai>,
+    @InjectRepository(DepartamentoPai)
+    private readonly departamentoRepository: Repository<DepartamentoPai>,
+    @InjectRepository(MunicipioDepartamento)
+    private readonly municipioRepository: Repository<MunicipioDepartamento>,
     private readonly mailService: MailService,
   ) {}
 
@@ -42,6 +48,8 @@ export class AuthService {
         sexo,
         telefono,
         identificacion,
+        departamentoId,
+        municipioId,
         isActive,
         isAuthorized,
         paisId,
@@ -54,11 +62,44 @@ export class AuthService {
         throw new ConflictException('El email ya está registrado');
       }
 
-      const pais_existe = await this.PaiRepository.findOne({
+      const pais_existe = await this.paiRepository.findOne({
         where: { id: paisId },
       });
       if (!pais_existe)
         throw new NotFoundException('El pais seleccionado no existe');
+
+      const pais = await this.paiRepository.findOne({
+        where: { id: createAuthDto.paisId },
+      });
+      if (!pais) {
+        throw new NotFoundException('El país seleccionado no existe');
+      }
+
+      const departamento = await this.departamentoRepository.findOne({
+        where: { id: departamentoId },
+        relations: ['pai'],
+      });
+      if (!departamento) {
+        throw new NotFoundException('El departamento seleccionado no existe');
+      }
+      if (departamento.pai.id !== createAuthDto.paisId) {
+        throw new BadRequestException(
+          'El departamento no pertenece al país seleccionado',
+        );
+      }
+
+      const municipio = await this.municipioRepository.findOne({
+        where: { id: municipioId },
+        relations: ['departamento'],
+      });
+      if (!municipio) {
+        throw new NotFoundException('El municipio seleccionado no existe');
+      }
+      if (municipio.departamento.id !== createAuthDto.departamentoId) {
+        throw new BadRequestException(
+          'El municipio no pertenece al departamento seleccionado',
+        );
+      }
 
       const hashedPassword = await this.hashPassword(password);
 
@@ -67,6 +108,8 @@ export class AuthService {
         email,
         name,
         password: hashedPassword,
+        municipio,
+        departamento,
         sexo,
         telefono,
         identificacion,

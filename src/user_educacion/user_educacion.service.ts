@@ -1,12 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
-import { CreateUserEducacionDto } from './dto/create-user_educacion.dto';
 import { UpdateUserEducacionDto } from './dto/update-user_educacion.dto';
 import { UserEducacion } from './entities/user_educacion.entity';
 import { User } from 'src/auth/entities/auth.entity';
-import e from 'express';
+import { CreateUserEducacionDto } from './dto/create-user_educacion.dto';
 
 @Injectable()
 export class UserEducacionService {
@@ -18,8 +16,17 @@ export class UserEducacionService {
   ) {}
 
   async create(createUserEducacionDto: CreateUserEducacionDto) {
-    const { userId, fechaInicio, institucion, titulo, descripcion, fechaFin } =
-      createUserEducacionDto;
+    const {
+      userId,
+      fechaInicio,
+      institucion,
+      titulo,
+      descripcion,
+      fechaFin,
+      aptitudes,
+      disciplina_academia,
+      nota,
+    } = createUserEducacionDto;
     try {
       const user_exist = await this.userRepo.findOne({ where: { id: userId } });
       if (!user_exist)
@@ -33,6 +40,9 @@ export class UserEducacionService {
         fechaInicio,
         fechaFin,
         descripcion,
+        aptitudes,
+        disciplina_academia,
+        nota,
         user: user_exist,
       });
       delete educacion.user.password;

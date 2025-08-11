@@ -38,6 +38,18 @@ export class CreateUserEducacionDto {
   @IsOptional()
   @IsString({ message: 'La descripción debe ser una cadena de texto' })
   descripcion?: string;
+
+  @IsOptional()
+  @IsString({ message: 'Las aptitudes debe ser una cadena de texto' })
+  aptitudes?: string;
+
+  @IsOptional()
+  @IsString({ message: 'La nota debe ser una cadena de texto' })
+  nota?: string;
+
+  @IsOptional()
+  @IsString({ message: 'La disciplina academia debe ser una cadena de texto' })
+  disciplina_academia?: string;
 }
 
 export class UpdateUserEducacionDto {
@@ -68,4 +80,16 @@ export class UpdateUserEducacionDto {
   @IsOptional()
   @IsString({ message: 'La descripción debe ser una cadena de texto' })
   descripcion?: string;
+
+  @IsOptional()
+  @IsString({ message: 'Las aptitudes debe ser una cadena de texto' })
+  aptitudes?: string;
+
+  @IsOptional()
+  @IsString({ message: 'La nota debe ser una cadena de texto' })
+  nota?: string;
+
+  @IsOptional()
+  @IsString({ message: 'La disciplina academia debe ser una cadena de texto' })
+  disciplina_academia?: string;
 }
