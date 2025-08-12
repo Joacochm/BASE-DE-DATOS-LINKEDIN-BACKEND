@@ -1,4 +1,5 @@
 import { User } from 'src/auth/entities/auth.entity';
+import { LikesPost } from 'src/likes_posts/entities/likes_post.entity';
 import { PostMedia } from 'src/posts_media/entities/posts_media.entity';
 import {
   Entity,
@@ -34,4 +35,11 @@ export class PostsUser {
     eager: true,
   })
   media: PostMedia[];
+
+  @OneToMany(() => LikesPost, (like) => like.post)
+  likes: LikesPost[];
+
+  get likesCount(): number {
+    return this.likes ? this.likes.length : 0;
+  }
 }

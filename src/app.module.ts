@@ -18,6 +18,8 @@ import { MunicipioDepartamentoModule } from './municipio_departamento/municipio_
 import { ImagenesPortadasModule } from './imagenes_portadas/imagenes_portadas.module';
 import { PostsUsersModule } from './posts_users/posts_users.module';
 import { PostsMediaModule } from './posts_media/posts_media.module';
+import { LikesPostsModule } from './likes_posts/likes_posts.module';
+import { FriendRequestsModule } from './friend_requests/friend_requests.module';
 
 @Module({
   imports: [
@@ -50,6 +52,8 @@ import { PostsMediaModule } from './posts_media/posts_media.module';
     ImagenesPortadasModule,
     PostsUsersModule,
     PostsMediaModule,
+    LikesPostsModule,
+    FriendRequestsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

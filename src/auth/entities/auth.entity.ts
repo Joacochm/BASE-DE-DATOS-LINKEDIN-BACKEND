@@ -1,6 +1,8 @@
 import { Exclude } from 'class-transformer';
 import { DepartamentoPai } from 'src/departamento_pais/entities/departamento_pai.entity';
+import { FriendRequest } from 'src/friend_requests/entities/friend_request.entity';
 import { ImagenesPortada } from 'src/imagenes_portadas/entities/imagenes_portada.entity';
+import { LikesPost } from 'src/likes_posts/entities/likes_post.entity';
 import { MunicipioDepartamento } from 'src/municipio_departamento/entities/municipio_departamento.entity';
 import { Pai } from 'src/pais/entities/pai.entity';
 import { PostsUser } from 'src/posts_users/entities/posts_user.entity';
@@ -12,6 +14,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -78,6 +82,23 @@ export class User {
 
   @OneToMany(() => PostsUser, (post) => post.user)
   posts: PostsUser[];
+
+  @OneToMany(() => LikesPost, (like) => like.user)
+  likes: LikesPost[];
+
+  @OneToMany(() => FriendRequest, (friendRequest) => friendRequest.sender)
+  sentFriendRequests: FriendRequest[];
+
+  @OneToMany(() => FriendRequest, (friendRequest) => friendRequest.receiver)
+  receivedFriendRequests: FriendRequest[];
+
+  @ManyToMany(() => User, (user) => user.friends)
+  @JoinTable({
+    name: 'user_friends',
+    joinColumn: { name: 'userId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'friendId', referencedColumnName: 'id' },
+  })
+  friends: User[];
 
   get currentProfileImage(): ProfileImage | null {
     if (!this.profileImages || this.profileImages.length === 0) return null;
